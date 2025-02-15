@@ -13,25 +13,20 @@ let maxId = 3;
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css',
 })
-@Injectable({ providedIn: 'root' })
 export class TasksComponent {
   constructor(private tasksService: TasksService) {}
   @Input({ required: true }) userId!: string;
   @Input({ required: true }) name!: string;
   isAddingTask = false;
 
-  onCompleteTask(id: string) {
-    this.tasksService.removeTask(id);
-  }
-  onStartAddTask() {
-    this.tasksService;
-  }
-  onCancelAddTask() {
-    this.isAddingTask = false;
+  get selectedUserTasks() {
+    return this.tasksService.getUserTasks(this.userId);
   }
 
-  onAddTask(taskData: NewTask) {
-    this.tasksService.addTask(taskData, this.userId);
+  onStartAddTask() {
+    this.isAddingTask = true;
+  }
+  onCloseAddTask() {
     this.isAddingTask = false;
   }
 }
